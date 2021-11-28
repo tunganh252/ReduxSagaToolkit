@@ -1,0 +1,16 @@
+import axiosClient from './axiosClient';
+import { ICity, IListResponse } from 'models';
+
+const cityApi = {
+  getAll(): Promise<IListResponse<ICity>> {
+    const url = '/cities';
+    return axiosClient.get(url, {
+      params: {
+        _page: 1,
+        _limit: 10,
+      },
+    });
+  },
+};
+
+export default cityApi;
