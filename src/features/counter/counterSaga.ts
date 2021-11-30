@@ -1,4 +1,4 @@
-import { takeEvery, delay, put, takeLatest } from '@redux-saga/core/effects';
+import { delay, put, takeLatest } from '@redux-saga/core/effects';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { incrementSagaStart, incrementSagaSuccess } from './counterSlice';
 

@@ -1,14 +1,27 @@
 import axiosClient from './axiosClient';
-import { ICity, IListResponse } from 'models';
+import { IListParams, IListResponse, IStudent } from 'models';
 
 const studentApi = {
-  getAll() {
+  getAll(params: IListParams): Promise<IListResponse<IStudent>> {
     const url = '/students';
-    return axiosClient.get(url, {
-      params: {
-        _page: 1,
-        _limit: 10,
-      },
-    });
+    return axiosClient.get(url, { params });
+  },
+  getById(id: string): Promise<IStudent> {
+    const url = `/students/${id}`;
+    return axiosClient.get(url);
+  },
+  add(data: IStudent): Promise<IStudent> {
+    const url = '/students';
+    return axiosClient.post(url, data);
+  },
+  update(data: IStudent): Promise<IStudent> {
+    const url = '/students';
+    return axiosClient.patch(url, data);
+  },
+  remove(id: string): Promise<any> {
+    const url = `/students/${id}`;
+    return axiosClient.delete(url);
   },
 };
+
+export default studentApi;
