@@ -14,6 +14,5 @@ export function* handleIncrementSaga(action: PayloadAction<number>) {
 }
 
 export default function* counterSaga() {
-  console.log('Counter Saga nè');
   yield takeLatest(incrementSagaStart.toString(), handleIncrementSaga);
 }
