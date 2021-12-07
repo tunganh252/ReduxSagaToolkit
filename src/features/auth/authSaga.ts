@@ -35,7 +35,13 @@ function* watchLoginFlow() {
     if (!isLoggedIn) {
       const action: PayloadAction<LoginPayload> = yield take(authActions.login.type);
       yield fork(handleLogin, action.payload);
-    }
+    } else
+      yield put(
+        authActions.loginSuccess({
+          id: 1,
+          name: 'Tung Anh',
+        })
+      );
 
     yield take(authActions.logout.type);
     yield call(handleLogout);

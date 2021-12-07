@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import * as React from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import cityApi from './api/cityApi';
 import { NotFound, PrivateRoute } from './components/Common';
 import { AdminLayout } from './components/Layout';
 import LoginPage from './features/auth/pages/LoginPage';
 
 function App() {
-  useEffect(() => {
+  React.useEffect(() => {
     cityApi.getAll().then((res) => {
       console.log(res);
     });
@@ -25,6 +25,7 @@ function App() {
           }
         />
         <Route element={<NotFound />} />
+        <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </div>
   );
