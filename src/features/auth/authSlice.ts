@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../models/user';
+import { RootState } from 'app/store';
+import { IUser } from 'models';
 
 export interface LoginPayload {
   username: string;
@@ -45,7 +46,7 @@ const authSlice = createSlice({
 export const authActions = authSlice.actions;
 
 // Selectors
-export const authSelectors = (state: any) => state.auth;
+export const authSelectors = (state: RootState) => state.auth;
 
 // Reducers
 export const authReducer = authSlice.reducer;
