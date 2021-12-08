@@ -71,6 +71,8 @@ export const selectDashboardLoading = (state: RootState) => state.dashboard.load
 export const selectDashboardStatistics = (state: RootState) => state.dashboard.statistics;
 export const selectDashboardHighestStudentList = (state: RootState) =>
   state.dashboard.highestStudentList;
+export const selectDashboardLowestStudentList = (state: RootState) =>
+  state.dashboard.lowestStudentList;
 export const selectDashboardRankingByCityList = (state: RootState) =>
   state.dashboard.rankingByCityList;
 
