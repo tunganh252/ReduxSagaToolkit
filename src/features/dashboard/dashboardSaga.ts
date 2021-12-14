@@ -58,6 +58,7 @@ function* fetchRankingByCityList() {
 
   const rankingCityByList = responseList.map((x, i) => ({
     cityId: cityList[i].code,
+    cityName: cityList[i].name,
     rankingList: x.data,
   }));
 
