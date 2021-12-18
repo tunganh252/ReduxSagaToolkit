@@ -4,9 +4,9 @@ import { IListParams, IListResponse, IPaginationParams, IStudent } from 'models'
 
 export interface StudentState {
   loading: boolean;
-  list?: IStudent[];
-  filter?: IListParams;
-  pagination?: IPaginationParams;
+  list: IStudent[];
+  filter: IListParams;
+  pagination: IPaginationParams;
 }
 
 const initialState: StudentState = {
