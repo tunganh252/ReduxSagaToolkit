@@ -4,6 +4,7 @@ import authReducer from '../features/auth/authSlice';
 import counterReducer from '../features/counter/counterSlice';
 import dashboardReducer from '../features/dashboard/dashboardSlice';
 import studentReducer from '../features/student/studentSlice';
+import cityReducer from '../features/city/citySlice';
 
 import rootSaga from './rootSaga';
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     auth: authReducer,
     dashboard: dashboardReducer,
     student: studentReducer,
+    city: cityReducer,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

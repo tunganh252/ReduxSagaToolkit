@@ -10,6 +10,7 @@ import {
 } from '../studentSlice';
 import StudentTable from '../components/StudentTable';
 import { Pagination } from '@material-ui/lab';
+import { selectCityMap } from 'features/city/citySlice';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,7 @@ const ListPage = () => {
   const studentList = useAppSelector(selectStudentList);
   const pagination = useAppSelector(selectStudentPagination);
   const filter = useAppSelector(selectStudentFilter);
+  const listCityMap = useAppSelector(selectCityMap);
 
   useEffect(() => {
     dispatch(studentActions.fetchStudentList(filter));
@@ -64,7 +66,7 @@ const ListPage = () => {
         </Button>
       </Box>
 
-      <StudentTable studentList={studentList} />
+      <StudentTable studentList={studentList} cityMap={listCityMap} />
       <Box my={3} display={'flex'} justifyContent={'center'}>
         <Pagination
           color="primary"
