@@ -1,16 +1,18 @@
 import { Box, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
-import { useAppDispatch, useAppSelector } from 'app/hooks';
-import React, { useEffect } from 'react';
-import {
-  studentActions,
-  selectStudentList,
-  selectStudentPagination,
-  selectStudentFilter,
-  selectStudentLoading,
-} from '../studentSlice';
-import StudentTable from '../components/StudentTable';
 import { Pagination } from '@material-ui/lab';
-import { selectCityMap } from 'features/city/citySlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+import { selectCityList, selectCityMap } from 'features/city/citySlice';
+import { IListParams } from 'models';
+import React, { useEffect } from 'react';
+import StudentFilter from '../components/StudentFilter';
+import StudentTable from '../components/StudentTable';
+import {
+  selectStudentFilter,
+  selectStudentList,
+  selectStudentLoading,
+  selectStudentPagination,
+  studentActions,
+} from '../studentSlice';
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -39,7 +41,9 @@ const ListPage = () => {
   const studentList = useAppSelector(selectStudentList);
   const pagination = useAppSelector(selectStudentPagination);
   const filter = useAppSelector(selectStudentFilter);
-  const listCityMap = useAppSelector(selectCityMap);
+
+  const cityList = useAppSelector(selectCityList);
+  const cityListMap = useAppSelector(selectCityMap);
 
   useEffect(() => {
     dispatch(studentActions.fetchStudentList(filter));
@@ -54,6 +58,12 @@ const ListPage = () => {
     );
   };
 
+  const handleSearchChange = (newFilter: IListParams) => {
+    dispatch(studentActions.setFilterWithDebounce(newFilter));
+  };
+
+  console.log(1111, studentList);
+
   return (
     <Box className={classes.root}>
       {/* Loading */}
@@ -66,15 +76,30 @@ const ListPage = () => {
         </Button>
       </Box>
 
-      <StudentTable studentList={studentList} cityMap={listCityMap} />
-      <Box my={3} display={'flex'} justifyContent={'center'}>
-        <Pagination
-          color="primary"
-          count={Math.ceil(pagination._totalRows / pagination._limit)}
-          page={pagination._page}
-          onChange={handleChange}
-        />
+      <Box mt={3}>
+        <StudentFilter filter={filter} city={cityList} onSearchChange={handleSearchChange} />
       </Box>
+
+      {studentList && studentList.length > 0 ? (
+        <>
+          <Box mt={3}>
+            <StudentTable studentList={studentList} cityMap={cityListMap} />
+          </Box>
+
+          <Box my={3} display={'flex'} justifyContent={'center'}>
+            <Pagination
+              color="primary"
+              count={Math.ceil(pagination._totalRows / pagination._limit)}
+              page={pagination._page}
+              onChange={handleChange}
+            />
+          </Box>
+        </>
+      ) : (
+        <Box display="flex" justifyContent="center" alignItems="center" mt={10}>
+          <Typography variant="h4">No data...</Typography>
+        </Box>
+      )}
     </Box>
   );
 };
