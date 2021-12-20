@@ -61,8 +61,9 @@ const ListPage = () => {
   const handleSearchChange = (newFilter: IListParams) => {
     dispatch(studentActions.setFilterWithDebounce(newFilter));
   };
-
-  console.log(1111, studentList);
+  const handleFilterChange = (newFilter: IListParams) => {
+    dispatch(studentActions.setFilter(newFilter));
+  };
 
   return (
     <Box className={classes.root}>
@@ -77,7 +78,12 @@ const ListPage = () => {
       </Box>
 
       <Box mt={3}>
-        <StudentFilter filter={filter} city={cityList} onSearchChange={handleSearchChange} />
+        <StudentFilter
+          filter={filter}
+          cityList={cityList}
+          onSearchChange={handleSearchChange}
+          onChange={handleFilterChange}
+        />
       </Box>
 
       {studentList && studentList.length > 0 ? (
