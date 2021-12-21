@@ -1,8 +1,9 @@
 import { Box, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
 import { Pagination } from '@material-ui/lab';
+import studentApi from 'api/studenApi';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectCityList, selectCityMap } from 'features/city/citySlice';
-import { IListParams } from 'models';
+import { IListParams, IStudent } from 'models';
 import React, { useEffect } from 'react';
 import StudentFilter from '../components/StudentFilter';
 import StudentTable from '../components/StudentTable';
@@ -11,7 +12,7 @@ import {
   selectStudentList,
   selectStudentLoading,
   selectStudentPagination,
-  studentActions,
+  studentActions
 } from '../studentSlice';
 
 const useStyle = makeStyles((theme) => ({
@@ -61,9 +62,27 @@ const ListPage = () => {
   const handleSearchChange = (newFilter: IListParams) => {
     dispatch(studentActions.setFilterWithDebounce(newFilter));
   };
+
   const handleFilterChange = (newFilter: IListParams) => {
     dispatch(studentActions.setFilter(newFilter));
   };
+
+  const handleRemoveStudent = async (student: IStudent) => {
+    console.log(1111, student);
+
+    try {
+      // Remove student API
+      await studentApi.remove(student?.id || "")
+
+      // Trigger to re-fetch student list with current filter
+      const newFilter = { ...filter }
+      dispatch(studentActions.setFilter(newFilter))
+
+    } catch (error) {
+      /// Toast Errorf
+      console.log("failed to fetch list student ", error);
+    }
+  }
 
   return (
     <Box className={classes.root}>
@@ -89,7 +108,9 @@ const ListPage = () => {
       {studentList && studentList.length > 0 ? (
         <>
           <Box mt={3}>
-            <StudentTable studentList={studentList} cityMap={cityListMap} />
+            <StudentTable studentList={studentList} cityMap={cityListMap}
+              onRemove={handleRemoveStudent}
+            />
           </Box>
 
           <Box my={3} display={'flex'} justifyContent={'center'}>
