@@ -19,8 +19,8 @@ export default function StudentFeature(props: IStudentFeatureProps) {
     <Box>
       <Routes>
         <Route path="/" element={<ListPage />} />
-        <Route path="add" element={<AddEditPage />} />
-        <Route path=":id" element={<AddEditPage />} />
+        <Route path="/add" element={<AddEditPage />} />
+        <Route path="/:studentId" element={<AddEditPage />} />
       </Routes>
     </Box>
   );

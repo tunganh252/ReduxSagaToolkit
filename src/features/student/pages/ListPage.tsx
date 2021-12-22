@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import { IListParams, IStudent } from 'models';
 import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import StudentFilter from '../components/StudentFilter';
 import StudentTable from '../components/StudentTable';
 import {
@@ -12,7 +13,7 @@ import {
   selectStudentList,
   selectStudentLoading,
   selectStudentPagination,
-  studentActions
+  studentActions,
 } from '../studentSlice';
 
 const useStyle = makeStyles((theme) => ({
@@ -35,8 +36,9 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const ListPage = () => {
-  const dispatch = useAppDispatch();
   const classes = useStyle();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const studentLoading = useAppSelector(selectStudentLoading);
   const studentList = useAppSelector(selectStudentList);
@@ -72,17 +74,20 @@ const ListPage = () => {
 
     try {
       // Remove student API
-      await studentApi.remove(student?.id || "")
+      await studentApi.remove(student?.id || '');
 
       // Trigger to re-fetch student list with current filter
-      const newFilter = { ...filter }
-      dispatch(studentActions.setFilter(newFilter))
-
+      const newFilter = { ...filter };
+      dispatch(studentActions.setFilter(newFilter));
     } catch (error) {
       /// Toast Errorf
-      console.log("failed to fetch list student ", error);
+      console.log('failed to fetch list student ', error);
     }
-  }
+  };
+
+  const handleEditStudent = (student: IStudent) => {
+    navigate(`${student.id}`);
+  };
 
   return (
     <Box className={classes.root}>
@@ -91,9 +96,11 @@ const ListPage = () => {
 
       <Box className={classes.titleContainer}>
         <Typography variant="h4">Student</Typography>
-        <Button variant="contained" color="primary">
-          Add new student
-        </Button>
+        <Link to="add" style={{ textDecoration: 'none' }}>
+          <Button variant="contained" color="primary">
+            Add new student
+          </Button>
+        </Link>
       </Box>
 
       <Box mt={3}>
@@ -108,7 +115,10 @@ const ListPage = () => {
       {studentList && studentList.length > 0 ? (
         <>
           <Box mt={3}>
-            <StudentTable studentList={studentList} cityMap={cityListMap}
+            <StudentTable
+              studentList={studentList}
+              cityMap={cityListMap}
+              onEdit={handleEditStudent}
               onRemove={handleRemoveStudent}
             />
           </Box>
