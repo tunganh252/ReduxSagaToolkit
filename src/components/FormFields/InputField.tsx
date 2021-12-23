@@ -18,22 +18,20 @@ const InputField = ({ name, control, label, ...inputProps }: InputFieldProps) =>
   });
 
   return (
-    <div>
-      <TextField
-        fullWidth
-        size="small"
-        margin="normal"
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        label={label}
-        variant="outlined"
-        inputRef={ref}
-        error={invalid}
-        helperText={error?.message}
-        disabled={inputProps.disabled}
-      />
-    </div>
+    <TextField
+      fullWidth
+      size="small"
+      margin="normal"
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+      label={label}
+      variant="outlined"
+      inputRef={ref}
+      error={invalid}
+      helperText={error?.message}
+      disabled={inputProps.disabled}
+    />
   );
 };
 
