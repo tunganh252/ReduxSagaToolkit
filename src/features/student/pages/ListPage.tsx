@@ -6,6 +6,7 @@ import { selectCityList, selectCityMap } from 'features/city/citySlice';
 import { IListParams, IStudent } from 'models';
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import StudentFilter from '../components/StudentFilter';
 import StudentTable from '../components/StudentTable';
 import {
@@ -70,8 +71,6 @@ const ListPage = () => {
   };
 
   const handleRemoveStudent = async (student: IStudent) => {
-    console.log(1111, student);
-
     try {
       // Remove student API
       await studentApi.remove(student?.id || '');
@@ -79,6 +78,8 @@ const ListPage = () => {
       // Trigger to re-fetch student list with current filter
       const newFilter = { ...filter };
       dispatch(studentActions.setFilter(newFilter));
+
+      toast.success('Remove student successfully!');
     } catch (error) {
       /// Toast Errorf
       console.log('failed to fetch list student ', error);

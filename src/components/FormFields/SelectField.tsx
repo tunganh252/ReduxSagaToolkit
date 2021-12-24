@@ -35,7 +35,13 @@ const SelectField = ({ name, control, label, disabled, options }: SelectFieldPro
       error={invalid}
     >
       <InputLabel id={`${name}_label`}>{label}</InputLabel>
-      <Select labelId={`${name}_label`} value={value} onChange={onChange} onBlur={onBlur}>
+      <Select
+        labelId={`${name}_label`}
+        label={label}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      >
         {options.map((select) => {
           return (
             <MenuItem key={select.value} value={select.value}>

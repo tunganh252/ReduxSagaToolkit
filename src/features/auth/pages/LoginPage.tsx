@@ -41,7 +41,7 @@ const LoginPage = () => {
         </Typography>
         <Box mt={4}>
           <Button variant="contained" fullWidth color="primary" onClick={handleLoginPage}>
-            {isLogging && <CircularProgress size={20} color="secondary" />} Fake Login
+            {isLogging && <CircularProgress size={20} color="secondary" />} &nbsp; Fake Login
           </Button>
         </Box>
       </Paper>

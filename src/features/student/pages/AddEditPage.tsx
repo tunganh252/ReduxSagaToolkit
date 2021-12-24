@@ -4,6 +4,7 @@ import studentApi from 'api/studenApi';
 import { IStudent } from 'models';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import StudentForm from '../components/StudentForm';
 
 const AddEditPage = () => {
@@ -40,6 +41,8 @@ const AddEditPage = () => {
 
     if (isEdit) await studentApi.update(dataRequest);
     else await studentApi.add(dataRequest);
+
+    toast.success('Save student successfully!');
 
     // Redirect back to student list
     navigate('/admin/students');
