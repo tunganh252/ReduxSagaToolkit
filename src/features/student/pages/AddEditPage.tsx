@@ -3,10 +3,11 @@ import { ChevronLeft } from '@material-ui/icons';
 import studentApi from 'api/studenApi';
 import { IStudent } from 'models';
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import StudentForm from '../components/StudentForm';
 
 const AddEditPage = () => {
+  const navigate = useNavigate();
   const { studentId } = useParams();
   const isEdit = Boolean(studentId);
 
@@ -26,7 +27,23 @@ const AddEditPage = () => {
     })();
   }, [studentId]);
 
-  const handleStudentSubmitForm = (formValues: IStudent) => {};
+  const handleStudentSubmitForm = async (formValues: IStudent) => {
+    // TODO: handle submit here, call api to add/update student
+    let dataRequest = {
+      id: formValues.id,
+      age: formValues.age,
+      city: formValues.city,
+      gender: formValues.gender,
+      mark: formValues.mark,
+      name: formValues.name,
+    };
+
+    if (isEdit) await studentApi.update(dataRequest);
+    else await studentApi.add(dataRequest);
+
+    // Redirect back to student list
+    navigate('/admin/students');
+  };
 
   const initialValues: IStudent = {
     name: '',

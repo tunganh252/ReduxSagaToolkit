@@ -14,8 +14,8 @@ const studentApi = {
     const url = '/students';
     return axiosClient.post(url, data);
   },
-  update(data: IStudent): Promise<IStudent> {
-    const url = '/students';
+  update(data: Partial<IStudent>): Promise<IStudent> {
+    const url = `/students/${data.id}`;
     return axiosClient.patch(url, data);
   },
   remove(id: string | number): Promise<any> {
